@@ -48,6 +48,18 @@ jobs:
           TEMPLATE_FILE="templates/universal-login.html"          
           echo "El access token es:"
           echo $ACCESS_TOKEN
+          
+          # Leer y escapar el archivo HTML, escapando comillas, barras invertidas, saltos de línea, etc.
+          escaped_html=$(sed ':a;N;$!ba;s/\\/\\\\/g;s/"/\\"/g;s/\n/\\n/g;s/\t/\\t/g' "$TEMPLATE_FILE")
+
+          # Encapsular en JSON
+          json_payload=$(jq -n --arg template "$escaped_html" '{template: $template}')
+
+          # Resultado de mi transformación a JSON:
+          echo "Este es mi JSON:"
+          echo "$json_payload" | jq .
+
+          
           curl --request PUT \
             --url "https://${AUTH0_DOMAIN}/api/v2/branding/templates/universal-login" \
             --header "authorization: Bearer $ACCESS_TOKEN" \
