@@ -58,10 +58,17 @@ jobs:
           # Resultado de mi transformación a JSON:
           echo "Este es mi JSON:"
           echo "$json_payload" | jq .
-
           
+          #curl --request PUT \
+            #--url "https://${AUTH0_DOMAIN}/api/v2/branding/templates/universal-login" \
+            #--header "authorization: Bearer $ACCESS_TOKEN" \
+            #--header 'content-type: application/json' \
+            #--data '{"template": "'"$(cat templates/universal-login.html)"'"}'
+
+          # Enviar el HTML directamente como 'text/html'
           curl --request PUT \
-            --url "https://${AUTH0_DOMAIN}/api/v2/branding/templates/universal-login" \
-            --header "authorization: Bearer $ACCESS_TOKEN" \
-            --header 'content-type: application/json' \
-            --data '{"template": "'"$(cat templates/universal-login.html)"'"}'
+          --url "https://${AUTH0_DOMAIN}/api/v2/branding/templates/universal-login" \
+          --header "authorization: Bearer $ACCESS_TOKEN" \
+          --header 'content-type: text/html' \
+          --data @"$TEMPLATE_FILE"
+
