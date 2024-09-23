@@ -2,8 +2,13 @@ name: Deploy Universal Login to Auth0
 
 on:
   push:
-    branches:
-      - main  # Cambia la rama si usas otra para despliegues
+    # Lo siguiente es para cualquier cambio en el repo
+    #branches:
+    #  - main  # Cambia la rama si usas otra para despliegues
+
+    # Esto especifica que solo cuando se le haga un push al template, se ejecuta este workflow
+    paths:
+      - 'templates/universal-login.html'  # Ruta del archivo específico
 
 jobs:
   deploy:
