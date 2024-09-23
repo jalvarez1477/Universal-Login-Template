@@ -37,7 +37,8 @@ jobs:
             --data "{\"client_id\":\"${CLIENT_ID}\",\"client_secret\":\"${CLIENT_SECRET}\",\"audience\":\"https://${AUTH0_DOMAIN}/api/v2/\",\"grant_type\":\"client_credentials\"}")
          
 
-          =$(echo $RESPONSE | jq -r .)
+          ACCESS_TOKEN=$(echo $RESPONSE | jq -r .access_token)
+          echo "ACCESS_TOKEN=${ACCESS_TOKEN}" >> $GITHUB_ENV  # Guardar el token como variable global
           echo "El token es:"
           echo $ACCESS_TOKEN
 
